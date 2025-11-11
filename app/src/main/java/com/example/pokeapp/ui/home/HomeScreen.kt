@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 // 2. Imports do tema (já estavam corretos no seu arquivo)
 import com.example.pokeapp.ui.theme.MasterBallPurple
 import com.example.pokeapp.ui.theme.PokeBallRed
@@ -19,6 +20,8 @@ import com.example.pokeapp.ui.theme.UltraBallBlack
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pokeapp.R
+
 // import com.example.pokeapp.R // Para quando você adicionar os ícones
 
 /**
@@ -58,10 +61,11 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         // Botão Fácil
+
         DifficultyButton(
             text = "Pokeball",
             color = PokeBallRed,
-            // iconRes = R.drawable.ic_pokeball,
+            iconRes = R.drawable.pokeball,
             onClick = { onNavigateToGame("easy") }
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -70,7 +74,7 @@ fun HomeScreen(
         DifficultyButton(
             text = "Ultraball",
             color = UltraBallBlack,
-            // iconRes = R.drawable.ic_ultraball,
+            iconRes = R.drawable.ultraball,
             onClick = { onNavigateToGame("medium") }
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -79,7 +83,7 @@ fun HomeScreen(
         DifficultyButton(
             text = "Masterball",
             color = MasterBallPurple,
-            // iconRes = R.drawable.ic_masterball,
+            iconRes = R.drawable.masterball,
             onClick = { onNavigateToGame("hard") }
         )
 
@@ -112,9 +116,10 @@ fun HomeScreen(
 fun DifficultyButton(
     text: String,
     color: Color,
-    // iconRes: Int,
+    iconRes: Int,
     onClick: () -> Unit
 ) {
+
     Button(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth().height(60.dp),
@@ -125,6 +130,12 @@ fun DifficultyButton(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+            Icon(
+                painter = painterResource(id = iconRes),
+                contentDescription = "pokeball",
+                tint = Color.Unspecified
+            )
             // Placeholder para o ícone
             // Image(painterResource(id = iconRes), ...)
             Spacer(modifier = Modifier.width(16.dp))
