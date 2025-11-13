@@ -5,12 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// Adicionado 'exportSchema = false' para suprimir o aviso do build
-@Database(entities = [UserEntity::class, GameAttemptEntity::class], version = 1, exportSchema = false)
+// 1. ADICIONADA ForumPostEntity::class E MUDADA A version = 2
+@Database(entities = [UserEntity::class, GameAttemptEntity::class, ForumPostEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun gameAttemptDao(): GameAttemptDao
+    abstract fun forumPostDao(): ForumPostDao // 2. ADICIONADO O NOVO DAO
 
     companion object {
         @Volatile
@@ -22,7 +23,11 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "pokeapp_database"
-                ).build()
+                )
+                    // 3. ADICIONADO: Permite que o Room destrua e recrie
+                    // o banco de dados se a versão mudar. Evita crash.
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

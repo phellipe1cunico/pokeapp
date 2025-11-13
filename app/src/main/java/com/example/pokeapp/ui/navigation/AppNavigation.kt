@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.pokeapp.MainApplication
 import com.example.pokeapp.di.AppViewModelFactory
+import com.example.pokeapp.ui.forum.ForumScreen // Import OK
 import com.example.pokeapp.ui.game.GameScreen
 import com.example.pokeapp.ui.home.HomeScreen
 import com.example.pokeapp.ui.login.LoginScreen
@@ -31,6 +32,7 @@ sealed class Screen(val route: String) {
     object Game : Screen("game/{difficulty}") {
         fun createRoute(difficulty: String) = "game/$difficulty"
     }
+    object Forum : Screen("forum") // Rota OK
 }
 
 @Composable
@@ -109,21 +111,20 @@ fun MainNavHost(
                 },
                 onNavigateToStats = {
                     navController.navigate(Screen.Stats.route)
+                },
+                onNavigateToForum = {
+                    navController.navigate(Screen.Forum.route)
                 }
             )
         }
 
-        // *** MUDANÇA AQUI ***
-        // Adiciona a função onNavigateUp para a StatsScreen
         composable(Screen.Stats.route) {
             StatsScreen(
                 viewModel = viewModel(factory = getViewModelFactory(userId)),
-                onNavigateUp = { navController.navigateUp() } // Passa a ação "voltar"
+                onNavigateUp = { navController.navigateUp() }
             )
         }
 
-        // *** MUDANÇA AQUI ***
-        // Adiciona a função onNavigateUp para a GameScreen
         composable(
             route = Screen.Game.route,
             arguments = listOf(navArgument("difficulty") { type = NavType.StringType })
@@ -136,9 +137,17 @@ fun MainNavHost(
                     onGameEnd = {
                         navController.popBackStack()
                     },
-                    onNavigateUp = { navController.navigateUp() } // Passa a ação "voltar"
+                    onNavigateUp = { navController.navigateUp() }
                 )
             }
+        }
+
+        composable(Screen.Forum.route) {
+            // 1. MODIFICADO: Injeta o ViewModel na tela
+            ForumScreen(
+                viewModel = viewModel(factory = getViewModelFactory(userId)),
+                onNavigateUp = { navController.navigateUp() }
+            )
         }
     }
 }

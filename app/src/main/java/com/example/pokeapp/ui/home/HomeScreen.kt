@@ -1,9 +1,10 @@
-package com.example.pokeapp.ui.home // 1. Pacote corrigido (não é .ui.ui)
+package com.example.pokeapp.ui.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Chat // 1. IMPORT ADICIONADO
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-// 2. Imports do tema (já estavam corretos no seu arquivo)
 import com.example.pokeapp.ui.theme.MasterBallPurple
 import com.example.pokeapp.ui.theme.PokeBallRed
 import com.example.pokeapp.ui.theme.PokeBlueTitle
@@ -22,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pokeapp.R
 
-// import com.example.pokeapp.R // Para quando você adicionar os ícones
-
 /**
  * Tela principal (Menu de Dificuldade).
  * Esta tela lê o UiState do HomeViewModel.
@@ -32,7 +30,8 @@ import com.example.pokeapp.R
 fun HomeScreen(
     viewModel: HomeViewModel,
     onNavigateToGame: (difficulty: String) -> Unit,
-    onNavigateToStats: () -> Unit
+    onNavigateToStats: () -> Unit,
+    onNavigateToForum: () -> Unit // 2. NOVO PARÂMETRO ADICIONADO
 ) {
     // 3. Lê o uiState (que contém dados do usuário, como isPremium)
     val uiState by viewModel.uiState.collectAsState()
@@ -42,12 +41,32 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+        // 4. LÓGICA DO FÓRUM (INÍCIO)
+        // Colocamos o ícone no canto superior direito
+        Box(modifier = Modifier.fillMaxWidth()) {
+            if (uiState.isPremium) {
+                IconButton(
+                    onClick = onNavigateToForum, // Chama a nova navegação
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Chat,
+                        contentDescription = "Fórum Premium",
+                        tint = MasterBallPurple, // Cor premium
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+        }
+        // LÓGICA DO FÓRUM (FIM)
+
         Text(
             text = "POKEGSSR",
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
             color = PokeBlueTitle,
-            modifier = Modifier.padding(top = 32.dp)
+            // 5. Ajusta o padding para compensar o ícone
+            modifier = Modifier.padding(top = 0.dp)
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -86,11 +105,6 @@ fun HomeScreen(
             iconRes = R.drawable.masterball,
             onClick = { onNavigateToGame("hard") }
         )
-
-        // TODO: Aqui você pode adicionar a lógica de Admin (Requisito)
-        // if (uiState.isPremium) {
-        //    AdminButton(onClick = { ... })
-        // }
 
         Spacer(modifier = Modifier.weight(1f)) // Empurra para baixo
 
@@ -136,8 +150,6 @@ fun DifficultyButton(
                 contentDescription = "pokeball",
                 tint = Color.Unspecified
             )
-            // Placeholder para o ícone
-            // Image(painterResource(id = iconRes), ...)
             Spacer(modifier = Modifier.width(16.dp))
             Text(text, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
