@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         entity = UserEntity::class,
         parentColumns = ["id"],
         childColumns = ["userId"],
-        onDelete = ForeignKey.CASCADE // Posts são deletados se o usuário for
+        onDelete = ForeignKey.CASCADE
     )],
     indices = [Index(value = ["userId"])]
 )
@@ -19,7 +19,7 @@ data class ForumPostEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val userId: Long,
-    val username: String, // Denormalizado para facilitar a exibição
+    val username: String,
     val title: String,
     val content: String,
     val timestamp: Long = System.currentTimeMillis()

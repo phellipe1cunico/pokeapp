@@ -2,7 +2,7 @@ package com.example.pokeapp.data.local
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.Index // Import necessário para o índice
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -13,8 +13,7 @@ import androidx.room.PrimaryKey
         childColumns = ["userId"],
         onDelete = ForeignKey.CASCADE
     )],
-    // CORREÇÃO: Adiciona um índice na coluna 'userId' para otimizar o banco de dados
-    // Isso resolve o aviso do build.
+
     indices = [Index(value = ["userId"])]
 )
 data class GameAttemptEntity(

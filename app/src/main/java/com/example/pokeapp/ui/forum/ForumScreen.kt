@@ -25,18 +25,16 @@ import com.example.pokeapp.ui.theme.MasterBallPurple
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Tela do Fórum, agora com funcionalidade de CRUD.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForumScreen(
-    viewModel: ForumViewModel, // 1. Recebe o ViewModel
+    viewModel: ForumViewModel,
     onNavigateUp: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // 2. Dialog de Adicionar/Editar
+
     if (uiState.showDialog) {
         AddEditPostDialog(
             title = uiState.dialogTitle,
@@ -65,7 +63,7 @@ fun ForumScreen(
                 }
             )
         },
-        // 3. Botão (FAB) para adicionar novo post
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = viewModel::onAddNewPostClick,
@@ -92,7 +90,7 @@ fun ForumScreen(
                     modifier = Modifier.padding(top = 64.dp)
                 )
             } else {
-                // 4. Lista de Posts
+
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -110,9 +108,7 @@ fun ForumScreen(
     }
 }
 
-/**
- * Composable para um único item de post na lista.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForumPostItem(
@@ -131,7 +127,7 @@ fun ForumPostItem(
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(4.dp))
-            // Formata a data e nome
+
             Text(
                 text = "por ${post.username} em ${post.timestamp.toFormattedDate()}",
                 fontSize = 12.sp,
@@ -144,7 +140,7 @@ fun ForumPostItem(
                 lineHeight = 22.sp
             )
             Spacer(modifier = Modifier.height(8.dp))
-            // Botões de Ação (Edit/Delete)
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -160,9 +156,7 @@ fun ForumPostItem(
     }
 }
 
-/**
- * Composable para o Dialog de Adicionar/Editar.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditPostDialog(
@@ -220,7 +214,7 @@ fun AddEditPostDialog(
     }
 }
 
-// Função utilitária para formatar o timestamp
+
 private fun Long.toFormattedDate(): String {
     val sdf = SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale.getDefault())
     return sdf.format(Date(this))

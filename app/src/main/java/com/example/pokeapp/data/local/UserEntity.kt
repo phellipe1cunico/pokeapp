@@ -8,7 +8,7 @@ data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val username: String,
-    val passwordHash: String, // Em um app real, armazene um hash, não a senha
+    val passwordHash: String,
     val email: String,
-    val isPremium: Boolean // Para a lógica de Admin
+    val isPremium: Boolean
 )

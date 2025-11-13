@@ -1,9 +1,7 @@
-//
-// ARQUIVO: build.gradle.kts (Module :app)
-//
+
 
 plugins {
-    // Aplica os plugins
+
 
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -12,12 +10,12 @@ plugins {
 }
 
 android {
-    // CORREÇÃO CRÍTICA: Alinha o ID do build com o ID do seu código
+
     namespace = "com.example.pokeapp"
     compileSdk = 34
 
     defaultConfig {
-        // CORREÇÃO CRÍTICA: Alinha o ID do app com o ID do seu código
+
         applicationId = "com.example.pokeapp"
         minSdk = 26
         targetSdk = 34

@@ -9,7 +9,7 @@ data class PokemonResponse(
     val name: String,
     val sprites: PokemonSprites,
     val types: List<PokemonTypeSlot>,
-    // Para a dificuldade "Difícil", precisamos da espécie (que contém a região)
+
     val species: PokemonSpeciesRef
 )
 
@@ -18,7 +18,7 @@ data class PokemonSprites(
 )
 
 data class PokemonOtherSprites(
-    // Mapeia o nome "official-artwork" do JSON para a nossa variável
+
     @SerializedName("official-artwork")
     val officialArtwork: PokemonOfficialArtwork
 )
@@ -37,14 +37,14 @@ data class PokemonType(
 )
 
 data class PokemonSpeciesRef(
-    val url: String // URL para buscar os detalhes da espécie
+    val url: String
 )
 
-// DTO para a segunda chamada (buscar a Região/Geração)
+
 data class PokemonSpeciesResponse(
     val generation: PokemonGeneration
 )
 
 data class PokemonGeneration(
-    val name: String // ex: "generation-i"
+    val name: String
 )

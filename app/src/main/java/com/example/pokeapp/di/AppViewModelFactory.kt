@@ -9,20 +9,18 @@ import com.example.pokeapp.ui.login.LoginViewModel
 import com.example.pokeapp.ui.register.RegisterViewModel
 import com.example.pokeapp.ui.stats.StatsViewModel
 
-/**
- * Factory (Fábrica) para criar instâncias de ViewModel.
- */
+
 class AppViewModelFactory(
     private val appContainer: AppContainerInterface,
-    private val currentUserId: Long? // ID do usuário logado
+    private val currentUserId: Long?
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            // Se a UI pedir um LoginViewModel...
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                // ...crie um, injetando o userRepository.
+
                 LoginViewModel(appContainer.userRepository) as T
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
@@ -40,7 +38,7 @@ class AppViewModelFactory(
                 if (currentUserId == null) throw IllegalArgumentException("StatsViewModel requer um userId")
                 StatsViewModel(appContainer.gameRepository, currentUserId) as T
             }
-            // 1. ADICIONADO: Lógica de criação do ForumViewModel
+
             modelClass.isAssignableFrom(ForumViewModel::class.java) -> {
                 if (currentUserId == null) throw IllegalArgumentException("ForumViewModel requer um userId")
                 // Ele precisa de ambos os repositórios (Fórum e Usuário)

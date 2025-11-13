@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.Chat // 1. IMPORT ADICIONADO
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,18 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pokeapp.R
 
-/**
- * Tela principal (Menu de Dificuldade).
- * Esta tela lê o UiState do HomeViewModel.
- */
+
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
     onNavigateToGame: (difficulty: String) -> Unit,
     onNavigateToStats: () -> Unit,
-    onNavigateToForum: () -> Unit // 2. NOVO PARÂMETRO ADICIONADO
+    onNavigateToForum: () -> Unit
 ) {
-    // 3. Lê o uiState (que contém dados do usuário, como isPremium)
+
     val uiState by viewModel.uiState.collectAsState()
 
     Column(
@@ -41,8 +38,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        // 4. LÓGICA DO FÓRUM (INÍCIO)
-        // Colocamos o ícone no canto superior direito
+
         Box(modifier = Modifier.fillMaxWidth()) {
             if (uiState.isPremium) {
                 IconButton(
@@ -58,14 +54,13 @@ fun HomeScreen(
                 }
             }
         }
-        // LÓGICA DO FÓRUM (FIM)
+
 
         Text(
             text = "POKEGSSR",
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
             color = PokeBlueTitle,
-            // 5. Ajusta o padding para compensar o ícone
             modifier = Modifier.padding(top = 0.dp)
         )
 
@@ -79,7 +74,7 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Botão Fácil
+
 
         DifficultyButton(
             text = "Pokeball",
@@ -89,7 +84,7 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Botão Médio
+
         DifficultyButton(
             text = "Ultraball",
             color = UltraBallBlack,
@@ -98,7 +93,7 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Botão Difícil
+
         DifficultyButton(
             text = "Masterball",
             color = MasterBallPurple,
@@ -108,7 +103,7 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.weight(1f)) // Empurra para baixo
 
-        // Botão de Estatísticas
+
         TextButton(onClick = onNavigateToStats) {
             Icon(
                 Icons.Default.BarChart,
@@ -119,13 +114,11 @@ fun HomeScreen(
             Text("Estatísticas", fontSize = 20.sp)
         }
 
-        Spacer(modifier = Modifier.height(64.dp)) // Espaço para o BottomNav
+        Spacer(modifier = Modifier.height(64.dp))
     }
 }
 
-/**
- * Composable reutilizável para os botões de dificuldade.
- */
+
 @Composable
 fun DifficultyButton(
     text: String,

@@ -29,7 +29,7 @@ class ForumViewModel(
         collectPosts()
     }
 
-    // 1. Carrega o usuário logado para "carimbar" o nome nos posts
+
     private fun loadCurrentUser() {
         viewModelScope.launch {
             when (val result = userRepository.getUser(userId)) {
@@ -39,7 +39,7 @@ class ForumViewModel(
         }
     }
 
-    // 2. Observa o banco de dados e atualiza a UI
+
     private fun collectPosts() {
         viewModelScope.launch {
             forumRepository.getAllPosts().collect { posts ->
@@ -48,7 +48,7 @@ class ForumViewModel(
         }
     }
 
-    // --- Funções chamadas pela UI ---
+
 
     fun onAddNewPostClick() {
         _uiState.update {
@@ -89,7 +89,7 @@ class ForumViewModel(
         }
     }
 
-    // Atualiza o estado dos TextFields do dialog
+
     fun onDialogTitleChange(title: String) {
         _uiState.update { it.copy(dialogTitle = title) }
     }
@@ -116,7 +116,7 @@ class ForumViewModel(
 
         viewModelScope.launch {
             if (state.currentPostToEdit == null) {
-                // Criar Novo Post
+
                 val newPost = ForumPostEntity(
                     userId = user.id,
                     username = user.username,
@@ -126,7 +126,7 @@ class ForumViewModel(
                 )
                 forumRepository.addPost(newPost)
             } else {
-                // Editar Post Existente
+
                 val updatedPost = state.currentPostToEdit.copy(
                     title = title,
                     content = content
@@ -134,6 +134,6 @@ class ForumViewModel(
                 forumRepository.updatePost(updatedPost)
             }
         }
-        onDialogDismiss() // Fecha o dialog após salvar
+        onDialogDismiss()
     }
 }

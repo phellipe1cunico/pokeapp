@@ -4,9 +4,7 @@ import com.example.pokeapp.data.local.ForumPostDao
 import com.example.pokeapp.data.local.ForumPostEntity
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Repositório para gerenciar as operações do Fórum (CRUD).
- */
+
 class ForumRepository(private val forumPostDao: ForumPostDao) {
 
     fun getAllPosts(): Flow<List<ForumPostEntity>> {

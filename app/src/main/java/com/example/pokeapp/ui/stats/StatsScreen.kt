@@ -20,31 +20,27 @@ import androidx.compose.ui.unit.sp
 import com.example.pokeapp.data.local.GameAttemptEntity
 import com.example.pokeapp.ui.theme.PokeRed // Import para a cor da barra
 
-/**
- * Tela de Estatísticas.
- * Mostra um resumo e um histórico (LazyColumn) das tentativas.
- */
-@OptIn(ExperimentalMaterial3Api::class) // Necessário para Scaffold e TopAppBar
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") // Para o padding do Scaffold
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun StatsScreen(
     viewModel: StatsViewModel,
-    onNavigateUp: () -> Unit // *** MUDANÇA AQUI: Recebe a ação "voltar" ***
+    onNavigateUp: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
-            // *** MUDANÇA AQUI: Adiciona uma TopAppBar ***
             TopAppBar(
                 title = { Text("Estatísticas") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = PokeRed, // Cor da barra
-                    titleContentColor = Color.White, // Cor do título
-                    navigationIconContentColor = Color.White // Cor da seta
+                    containerColor = PokeRed,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = onNavigateUp) { // Chama a ação "voltar"
+                    IconButton(onClick = onNavigateUp) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Voltar"
@@ -53,15 +49,15 @@ fun StatsScreen(
                 }
             )
         }
-    ) { paddingValues -> // O conteúdo da tela agora fica dentro do Scaffold
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // Aplica o padding da TopAppBar
-                .padding(16.dp) // Adiciona o padding original da tela
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
 
-            // O conteúdo original da tela começa aqui
+
             if (uiState.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             } else if (uiState.error != null) {
@@ -87,9 +83,7 @@ fun StatsScreen(
     }
 }
 
-/**
- * Composable para o card de resumo (Jogos, Acertos, Erros).
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StatsSummary(uiState: StatsUiState) {
@@ -108,9 +102,7 @@ fun StatsSummary(uiState: StatsUiState) {
     }
 }
 
-/**
- * Composable para um único item de estatística (ex: "Jogos: 5").
- */
+
 @Composable
 fun StatBox(label: String, value: String, color: Color = Color.Black) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -119,9 +111,7 @@ fun StatBox(label: String, value: String, color: Color = Color.Black) {
     }
 }
 
-/**
- * Composable para um único item no LazyColumn do histórico.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AttemptItem(attempt: GameAttemptEntity) {

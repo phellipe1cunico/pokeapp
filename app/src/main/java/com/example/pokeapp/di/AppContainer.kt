@@ -18,15 +18,13 @@ interface AppContainerInterface {
     val forumRepository: ForumRepository // 1. ADICIONADO
 }
 
-/**
- * Implementação do contêiner de dependências (Service Locator).
- */
+
 class AppContainer(context: Context) : AppContainerInterface {
 
-    // 1. Banco de Dados (Room)
+
     private val database by lazy { AppDatabase.getDatabase(context) }
 
-    // 2. Serviço de API (Retrofit)
+
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(PokeApiService.BASE_URL)
@@ -38,7 +36,7 @@ class AppContainer(context: Context) : AppContainerInterface {
         retrofit.create(PokeApiService::class.java)
     }
 
-    // 3. Repositórios (Injetando as dependências)
+
 
     override val userRepository: UserRepository by lazy {
         UserRepository(database.userDao())
@@ -48,7 +46,7 @@ class AppContainer(context: Context) : AppContainerInterface {
         GameRepository(pokeApiService, database.gameAttemptDao())
     }
 
-    // 2. ADICIONADO: Provê o novo repositório
+
     override val forumRepository: ForumRepository by lazy {
         ForumRepository(database.forumPostDao())
     }

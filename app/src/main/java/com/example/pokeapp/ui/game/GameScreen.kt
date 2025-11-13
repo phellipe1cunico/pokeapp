@@ -29,7 +29,7 @@ fun GameScreen(
     viewModel: GameViewModel,
     difficulty: String,
     onGameEnd: () -> Unit,
-    onNavigateUp: () -> Unit // Recebe a ação "voltar"
+    onNavigateUp: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -52,7 +52,7 @@ fun GameScreen(
                 titleContentColor = Color.White,
                 navigationIconContentColor = Color.White // Cor da seta
             ),
-            // Adiciona o ícone de "voltar"
+
             navigationIcon = {
                 IconButton(onClick = onNavigateUp) {
                     Icon(

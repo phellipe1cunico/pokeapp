@@ -10,11 +10,11 @@ interface GameAttemptDao {
     @Insert
     suspend fun insertAttempt(attempt: GameAttemptEntity)
 
-    // Requisito: Expor via Flow
+
     @Query("SELECT * FROM game_attempts WHERE userId = :userId ORDER BY timestamp DESC")
     fun getAttemptsForUser(userId: Long): Flow<List<GameAttemptEntity>>
 
-    // Requisito: CRUD (Delete)
+
     @Query("DELETE FROM game_attempts WHERE userId = :userId")
     suspend fun clearHistory(userId: Long)
 }
